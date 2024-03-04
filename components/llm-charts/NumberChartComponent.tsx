@@ -11,11 +11,11 @@ export function NumberChartComponent({
   title?: string;
 }) {
   if (
-    queryResult.results.length === 1 &&
-    Object.keys(queryResult.results[0]).length === 1
+    queryResult.data.length === 1 &&
+    Object.keys(queryResult.data[0]).length === 1
   ) {
-    const key = Object.keys(queryResult.results[0])[0];
-    const value = queryResult.results[0][key];
+    const key = Object.keys(queryResult.data[0])[0];
+    const value = queryResult.data[0][key];
     const isNumeric = !isNaN(parseFloat(value)) && isFinite(value);
 
     return (

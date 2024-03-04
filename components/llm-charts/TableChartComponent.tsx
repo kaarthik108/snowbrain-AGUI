@@ -33,7 +33,7 @@ export function TableChartComponent({
             </TableRow>
           </TableHead>
           <TableBody>
-            {queryResult.results.map((item, rowIndex) => (
+            {queryResult.data.map((item, rowIndex) => (
               <TableRow key={rowIndex}>
                 {queryResult.columns.map((column) => (
                   <TableCell key={`${rowIndex}-${column}`}>
