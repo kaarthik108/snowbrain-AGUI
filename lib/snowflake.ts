@@ -5,6 +5,7 @@ export async function executeSnowflakeQuery(sqlText: string) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.MODAL_AUTH_TOKEN}`,
     },
     body: JSON.stringify({ query: sqlText }),
   });

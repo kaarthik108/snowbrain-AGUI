@@ -4,12 +4,11 @@ import { executeSnowflakeQuery } from "./snowflake";
 async function getCachedQueryResult(query: string): Promise<any | null> {
   try {
     const cachedResult: string | null = await redis.get(query);
-    console.log(`Retrieved cached result for query:`, cachedResult);
     if (cachedResult) {
       console.log(`Successfully retrieved and parsed cached result for query:`);
       return cachedResult;
     } else {
-      console.log(`No cached result for query: ${query}`);
+      // console.log(`No cached result for query: ${query}`);
       return null;
     }
   } catch (e) {
@@ -24,8 +23,7 @@ async function getCachedQueryResult(query: string): Promise<any | null> {
 async function setCachedQueryResult(query: string, result: any): Promise<void> {
   try {
     const resultString: string = JSON.stringify(result);
-    await redis.set(query, resultString, { ex: 10000 }); // TTL set to 100 for demonstration
-    console.log(`Result cached for query: ${query}`);
+    await redis.set(query, resultString, { ex: 3 * 60 * 60 });
   } catch (e) {
     console.error(
       `Error caching result for query: ${query}`,
