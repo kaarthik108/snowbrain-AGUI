@@ -1,14 +1,13 @@
 export async function executeSnowflakeQuery(sqlText: string) {
-  const res = await fetch(
-    "https://kaarthik108--snowexecute-execute-sql.modal.run",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ query: sqlText }),
-    }
-  );
+  const modal = process.env.MODAL_URL;
+
+  const res = await fetch(`${modal}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ query: sqlText }),
+  });
 
   if (!res.ok) {
     throw new Error("Failed to execute query");

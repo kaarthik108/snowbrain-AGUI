@@ -1,10 +1,9 @@
 <a href="https://sdk.vercel.ai/rsc-demo">
-  <img alt="Generative UI Demo" src="https://github.com/vercel/ai/assets/4060187/f21fa839-c710-4f09-9af4-2056f603d98f">
-  <h1 align="center">Generative UI Demo</h1>
+  <h1 align="center">snowBrain Generative UI Demo</h1>
 </a>
 
 <p align="center">
-  An experimental preview of AI SDK 3.0 with Generative UI support
+SnowBrain is an open-source prototype that serves as your personal data analyst.
 </p>
 
 ## Features
@@ -13,18 +12,15 @@
 - [Vercel AI SDK 3.0](https://sdk.vercel.ai/docs) for Generative UI
 - OpenAI Tools/Function Calling
 - [shadcn/ui](https://ui.shadcn.com)
-
-## Quick Links
-
-- [Read the blog post](https://vercel.com/blog/ai-sdk-3-generative-ui)
-- [See the demo](https://sdk.vercel.ai/demo)
-- [Visit the docs](https://sdk.vercel.ai/docs/concepts/ai-rsc)
+- RAG - Retrieval Augmented Generation [Supabase](https://supabase.com/)
+- Charts using [Tremor](https://tremor.so)
+- Real time data retrieval using [Snowflake](https://www.snowflake.com/)
 
 ## Deploy Your Own
 
 You can deploy your own version of the demo to Vercel with one click:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fai%2Fblob%2Fmain%2Fexamples%2Fnext-ai-rsc&env=OPENAI_API_KEY&envDescription=OpenAI%20API%20Key&envLink=https%3A%2F%2Fplatform.openai.com%2Fapi-keys)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/kaarthik108/snowbrain-AGUI&project-name=snowbrain&repo-name=snowbrain-agui)
 
 ## Running locally
 
@@ -37,18 +33,18 @@ You will need to use the environment variables [defined in `.env.example`](.env.
 3. Download your environment variables: `vercel env pull`
 
 ```bash
-pnpm install
-pnpm dev
+bun install
+bun run dev
 ```
 
 Your app should now be running on [localhost:3000](http://localhost:3000/).
 
-## Authors
+## Example Queries
 
-This library is created by [Vercel](https://vercel.com) and [Next.js](https://nextjs.org) team members, with contributions from:
+snowBrain is designed to make complex data querying simple. Here are some example queries you can try:
 
-- Shu Ding ([@shuding\_](https://twitter.com/shuding_)) - [Vercel](https://vercel.com)
-- Max Leiter ([@max_leiter](https://twitter.com/max_leiter)) - [Vercel](https://vercel.com)
-- Jeremy Philemon ([@jeremyphilemon](https://github.com/jeremyphilemon)) - [Vercel](https://vercel.com)
-- shadcn ([@shadcn](https://twitter.com/shadcn)) - [Vercel](https://vercel.com)
-- Jared Palmer ([@jaredpalmer](https://twitter.com/jaredpalmer)) - [Vercel](https://vercel.com)
+- **Total revenue per product category**: "Show me the total revenue for each product category."
+- **Top customers by sales**: "Who are the top 10 customers by sales?"
+- **Average order value per region**: "What is the average order value for each region?"
+- **Order volume**: "How many orders were placed last week?"
+- **Product price listing**: "Display the list of products with their prices."
