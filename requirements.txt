@@ -1,0 +1,6 @@
+snowflake_snowpark_python
+snowflake-snowpark-python[pandas]
+black==23.3.0
+fastapi
+pydantic==1.10.8
+modal-client
