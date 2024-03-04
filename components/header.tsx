@@ -14,7 +14,7 @@ export async function Header() {
   return (
     <header className="sticky top-0 z-50 flex items-center justify-between w-full px-4 h-14 shrink-0 bg-background backdrop-blur-xl">
       <span className="inline-flex items-center home-links whitespace-nowrap">
-        <a href="https://vercel.com" rel="noopener" target="_blank">
+        <a href="https://snowbrain.dev" rel="noopener">
           <LogoIcon className="mr-1 h-6 w-6" />
         </a>
         <IconSeparator className="w-6 h-6 text-muted-foreground/20" />
@@ -26,7 +26,7 @@ export async function Header() {
         <Button variant="outline" asChild>
           <a
             target="_blank"
-            href="https://github.com/vercel/ai/tree/main/examples/next-ai-rsc"
+            href="https://github.com/kaarthik108/snowbrain-AGUI"
             rel="noopener noreferrer"
           >
             <IconGitHub />
@@ -34,7 +34,7 @@ export async function Header() {
         </Button>
         <Button asChild>
           <a
-            href="https://vercel.com/new/clone?repository-url="
+            href="https://vercel.com/new/clone?repository-url=https://github.com/kaarthik108/snowbrain-AGUI"
             target="_blank"
           >
             <IconVercel />
