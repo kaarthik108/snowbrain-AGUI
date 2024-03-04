@@ -9,11 +9,14 @@ import modal
 
 from typing import Optional
 
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI, HTTPException, status
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+
 from modal import Image, Stub, web_endpoint
 from pydantic import BaseModel
 
 web_app = FastAPI()
+auth_scheme = HTTPBearer()
 
 stub = Stub("snowexecute")
 
@@ -50,7 +53,13 @@ class SnowflakeConnection:
 
 @stub.function(image=image, secrets=[modal.Secret.from_name("snowrun")], cpu=1)
 @web_endpoint(method="POST")
-def execute_sql(query: Dict) -> Optional[Any]:
+def execute_sql(query: Dict, token: HTTPAuthorizationCredentials = Depends(auth_scheme),) -> Optional[Any]:
+    if token.credentials != os.environ["AUTH_TOKEN"]:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect bearer token",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
     query_text = query["query"]
     conn = SnowflakeConnection().get_session()
     if re.match(r"^\s*(drop|alter|truncate|delete|insert|update)\s", query_text, re.I):
@@ -69,3 +78,5 @@ def execute_sql(query: Dict) -> Optional[Any]:
 
 if __name__ == "__main__":
     stub.deploy("snowexecute")
+
+    
