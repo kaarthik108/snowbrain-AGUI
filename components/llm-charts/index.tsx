@@ -46,4 +46,37 @@ const LineComp = dynamic(
   }
 );
 
-export { AreaComp, LineComp, NumberComp, TableComp };
+const DonutComp = dynamic(
+  () => import("./DonutChartComponent").then((mod) => mod.DonutChartComponent),
+  {
+    ssr: false,
+    loading: () => <AreaSkeleton />,
+  }
+);
+
+const ScatterComp = dynamic(
+  () =>
+    import("./ScatterChartComponent").then((mod) => mod.ScatterChartComponent),
+  {
+    ssr: false,
+    loading: () => <AreaSkeleton />,
+  }
+);
+
+const BarComp = dynamic(
+  () => import("./BarChartComponent").then((mod) => mod.BarChartComponent),
+  {
+    ssr: false,
+    loading: () => <AreaSkeleton />,
+  }
+);
+
+export {
+  AreaComp,
+  BarComp,
+  DonutComp,
+  LineComp,
+  NumberComp,
+  ScatterComp,
+  TableComp,
+};

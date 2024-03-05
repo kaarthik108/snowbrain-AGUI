@@ -2,8 +2,16 @@
 import { AI, QueryResult } from "@/app/action";
 import { Card } from "@tremor/react";
 
-import { ChartType } from "@/lib/params";
-import { AreaComp, LineComp, NumberComp, TableComp } from "./llm-charts";
+import { ChartType } from "@/lib/validation";
+import {
+  AreaComp,
+  BarComp,
+  DonutComp,
+  LineComp,
+  NumberComp,
+  ScatterComp,
+  TableComp,
+} from "./llm-charts";
 
 // make me an area chart of all order amount over time
 
@@ -15,6 +23,8 @@ interface ChartProps {
   timeField?: string;
   categories: string[];
   index?: string;
+  yaxis?: string;
+  size?: string;
 }
 
 export function Chart({
@@ -24,6 +34,8 @@ export function Chart({
   timeField,
   categories,
   index,
+  yaxis,
+  size,
 }: ChartProps) {
   try {
     switch (chartType) {
@@ -47,6 +59,36 @@ export function Chart({
             title={title}
             index={timeField}
             categories={categories}
+          />
+        );
+      case "bar":
+        return (
+          <BarComp
+            queryResult={queryResult}
+            title={title}
+            index={index}
+            categories={categories}
+          />
+        );
+
+      case "scatter":
+        return (
+          <ScatterComp
+            queryResult={queryResult}
+            title={title}
+            index={index}
+            category={categories[0]}
+            yaxis={yaxis!}
+            size={size!}
+          />
+        );
+      case "donut":
+        return (
+          <DonutComp
+            queryResult={queryResult}
+            title={title}
+            index={index}
+            category={categories[0]}
           />
         );
 

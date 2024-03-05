@@ -12,17 +12,18 @@ import {
 } from "@/components/llm-charts";
 
 import { getContext } from "@/lib/context";
-import { zOpenAIQueryResponse } from "@/lib/params";
 import {
   formatNumber,
   runAsyncFnWithoutBlocking,
   runOpenAICompletion,
   sleep,
 } from "@/lib/utils";
+import { FQueryResponse } from "@/lib/validation";
 import { Code } from "bright";
 import { z } from "zod";
 
 import AreaSkeleton from "@/components/llm-charts/AreaSkeleton";
+import { Skeleton } from "@/components/ui/skeleton";
 import { executeQueryWithCache } from "@/lib/snowCache";
 import { format as sql_format } from "sql-formatter";
 
@@ -34,7 +35,7 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
   baseURL: `https://gateway.ai.cloudflare.com/v1/${process.env.CLOUDFLARE_ACCOUNT_TAG}/snowbrain/openai`,
 });
-type OpenAIQueryResponse = z.infer<typeof zOpenAIQueryResponse>;
+type OpenAIQueryResponse = z.infer<typeof FQueryResponse>;
 
 export interface QueryResult {
   columns: string[];
@@ -43,9 +44,7 @@ export interface QueryResult {
 
 async function submitUserMessage(content: string) {
   "use server";
-  console.log("User message:", content);
   const getDDL = await getContext(content);
-  console.log("DDL:", getDDL);
   const aiState = getMutableAIState<typeof AI>();
   aiState.update([
     ...aiState.get(),
@@ -58,9 +57,8 @@ async function submitUserMessage(content: string) {
   const reply = createStreamableUI(
     <BotMessage className="items-center">{spinner}</BotMessage>
   );
-
   const completion = runOpenAICompletion(openai, {
-    model: "gpt-3.5-turbo-0125",
+    model: "gpt-4-0125-preview",
     stream: true,
     messages: [
       {
@@ -68,6 +66,8 @@ async function submitUserMessage(content: string) {
         content: `\
 You are a snowflake data analytics assistant. You can help users with sql queries and you can help users query their data with only using snowflake sql syntax. Based on the context provided about snowflake DDL schema details, you can help users with their queries.
 You and the user can discuss their events and the user can request to create new queries or refine existing ones, in the UI.
+
+Always use proper aliases for the columns and tables in the queries. For example, instead of using "select * from table_name", use "select column_name as alias_name from table_name as alias_name".
 
 Messages inside [] means that it's a UI element or a user event. For example:
 - "[Results for query: query with format: format and title: title and description: description. with data" means that a chart/table/number card is shown to that user.
@@ -96,7 +96,7 @@ Besides that, you can also chat with users and do some calculations if needed.`,
         name: "query_data",
         description:
           "Query the data from the snowflake database and return the results.",
-        parameters: zOpenAIQueryResponse,
+        parameters: FQueryResponse,
       },
     ],
     temperature: 0,
@@ -113,15 +113,25 @@ Besides that, you can also chat with users and do some calculations if needed.`,
   completion.onFunctionCall(
     "query_data",
     async (input: OpenAIQueryResponse) => {
-      const { format, title, timeField, categories, index } = input;
+      reply.update(
+        <BotMessage className="">
+          <SystemMessage>
+            <AreaSkeleton />
+          </SystemMessage>
+        </BotMessage>
+      );
+      const { format, title, timeField, categories, index, yaxis, size } =
+        input;
       console.log("Received timeField:", timeField);
       console.log("Received format:", format);
       console.log("Received title:", title);
       console.log("Received categories:", categories);
+      console.log("Received index:", index);
+      console.log("Received yaxis:", yaxis);
+      console.log("Received size:", size);
       let query = input.query;
 
       const format_query = sql_format(query, { language: "sql" });
-      console.log("Received query:", query);
 
       const res = await executeQueryWithCache(format_query);
       console.log("Query results:", res);
@@ -131,17 +141,10 @@ Besides that, you can also chat with users and do some calculations if needed.`,
         data: res.data,
       };
 
-      console.log("Query results:", compatibleQueryResult);
-      reply.update(
-        <BotCard>
-          <AreaSkeleton />
-        </BotCard>
-      );
-
       reply.done(
         <BotCard>
           <SystemMessage>
-            <div className="py-4">
+            <div className="">
               <Chart
                 chartType={format}
                 queryResult={compatibleQueryResult}
@@ -149,6 +152,8 @@ Besides that, you can also chat with users and do some calculations if needed.`,
                 timeField={timeField}
                 categories={categories}
                 index={index}
+                yaxis={yaxis}
+                size={size}
               />
               <div className="py-4 whitespace-pre-line">
                 <Code lang="sql">{format_query}</Code>
@@ -163,7 +168,7 @@ Besides that, you can also chat with users and do some calculations if needed.`,
         {
           role: "function",
           name: "query_data",
-          content: `[Results for query: ${query} with format: ${format} and title: ${title} with data ${res.columns} ${res.data}]`,
+          content: `[Snowflake query results for code: ${query} and chart format: ${format} with categories: ${categories} and data ${res.columns} ${res.data}]`,
         },
       ]);
     }

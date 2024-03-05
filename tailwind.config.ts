@@ -156,6 +156,15 @@ const config: Config = {
         "tremor-title": ["1.125rem", { lineHeight: "1.75rem" }],
         "tremor-metric": ["1.875rem", { lineHeight: "2.25rem" }],
       },
+      keyframes: {
+        "skeleton-loading": {
+          "0%": { backgroundPosition: "-200% 0" },
+          "100%": { backgroundPosition: "200% 0" },
+        },
+      },
+      animation: {
+        "skeleton-loading": "skeleton-loading 1.5s infinite linear",
+      },
     },
   },
   safelist: [

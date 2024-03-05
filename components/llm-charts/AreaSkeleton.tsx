@@ -1,13 +1,24 @@
+"use client";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Card } from "@tremor/react";
 import React from "react";
+import { SystemMessage } from ".";
 
-function AreaSkeleton() {
+export default function AreaSkeleton() {
   return (
-    <div className="flex flex-col sm:flex-row text-sm gap-2 mb-4 overflow-y-scroll pb-4">
-      <div className="bg-zinc-900 text-left p-2 rounded-lg flex flex-row gap-2 cursor-pointer hover:bg-zinc-800 h-[60px] sm:w-[208px] w-full"></div>
-      <div className="bg-zinc-900 text-left p-2 rounded-lg flex flex-row gap-2 cursor-pointer hover:bg-zinc-800 h-[60px] sm:w-[208px] w-full"></div>
-      <div className="bg-zinc-900 text-left p-2 rounded-lg flex flex-row gap-2 cursor-pointer hover:bg-zinc-800 h-[60px] sm:w-[208px] w-full"></div>
-    </div>
+    <>
+      <SystemMessage>
+        <Card>
+          <div className="space-y-2">
+            <Skeleton className="h-6 w-3/4" />
+            <Skeleton className="h-80" />
+            <div className="flex justify-between">
+              <Skeleton className="h-4 w-1/5" />
+              <Skeleton className="h-4 w-1/5" />
+            </div>
+          </div>
+        </Card>
+      </SystemMessage>
+    </>
   );
 }
-
-export default AreaSkeleton;

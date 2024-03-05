@@ -1,11 +1,18 @@
 "use client";
 
 import { QueryResult } from "@/app/action";
-import { AreaChart, AreaChartProps } from "@tremor/react";
-import { useState } from "react";
+import { useDownloadChart } from "@/lib/hooks/useDownloadChart";
+import { AreaChart, AreaChartProps, Card } from "@tremor/react";
+import React, { useRef, useState } from "react";
+import { Button } from "../ui/button";
+import { IconDownload } from "../ui/icons";
 
 interface ExtendedAreaChartProps extends AreaChartProps {
-  onSelectionChange: (selectedData: any) => void;
+  onSelectionChange?: (selectedData: any) => void;
+}
+
+interface FilteredEntry {
+  [key: string]: number | string;
 }
 
 export function AreaChartComponent({
@@ -16,49 +23,76 @@ export function AreaChartComponent({
 }: {
   queryResult: QueryResult;
   title?: string;
-  timeField?: string;
+  timeField?: string; // Correctly mark as possibly undefined for strict type checking
   categories: string[];
 }) {
-  const dataFormatter = (number: number) =>
-    `$${Intl.NumberFormat("us").format(number).toString()}`;
+  const chartRef = useRef<HTMLDivElement>(null);
+  const downloadChart = useDownloadChart(chartRef);
+
+  const dataFormatter = (number: number): string =>
+    `$${Intl.NumberFormat("us").format(number)}`;
 
   const [selection, setSelection] = useState<[number, number] | null>(null);
 
-  const handleSelectionChange = (selectedData: any) => {
-    if (selectedData.length === 0) {
-      setSelection(null); // Reset selection if nothing is selected
-    } else {
-      const startIndex = selectedData[0].index;
-      const endIndex = selectedData[selectedData.length - 1].index;
-      setSelection([startIndex, endIndex]);
+  // Ensure timeField is defined before proceeding
+  if (!timeField) {
+    // Handle the error or provide a fallback for timeField if it's essential
+    console.error("timeField is undefined");
+    return null; // or a placeholder component
+  }
+  const filteredData: FilteredEntry[] = queryResult.data.map(
+    (entry): FilteredEntry => {
+      const filteredEntry: FilteredEntry = {};
+
+      for (const [key, value] of Object.entries(entry)) {
+        const lowercaseKey = key.toLowerCase();
+        if (lowercaseKey === timeField.toLowerCase()) {
+          filteredEntry[timeField] = value as string;
+        } else {
+          const matchedCategory = categories.find(
+            (category) => category.toLowerCase() === lowercaseKey
+          );
+          if (matchedCategory) {
+            filteredEntry[matchedCategory] = value as number;
+          }
+        }
+      }
+
+      return filteredEntry;
     }
-  };
+  );
 
   return (
     <>
-      <span className="text-lg font-medium dark:text-dark-tremor-content-strong">
-        {title}
-      </span>
-      <AreaChart
-        className="h-80"
-        data={queryResult.data}
-        index={timeField as string}
-        categories={categories}
-        colors={["indigo", "rose"]}
-        valueFormatter={dataFormatter}
-        yAxisWidth={60}
-        showAnimation={true}
-        animationDuration={1000}
-        onValueChange={(v: any) => console.log(v)} // Temporary any type for EventProps
-        {...(handleSelectionChange
-          ? { onSelectionChange: handleSelectionChange }
-          : {})}
-      />
-      {selection && (
-        <div className="mt-4">
-          Selection: {selection[0]} - {selection[1]}
+      <Card>
+        <div ref={chartRef} className="chart-container">
+          <p className="text-lg text-tremor-content-strong dark:text-dark-tremor-content-strong font-semibold mb-4">
+            {title}
+          </p>
+          <AreaChart
+            data={filteredData}
+            index={timeField}
+            categories={categories}
+            colors={["blue", "cyan", "indigo", "violet", "fuchsia"]}
+            valueFormatter={dataFormatter}
+            yAxisWidth={50}
+            showAnimation={true}
+            animationDuration={1000}
+            showLegend
+            onValueChange={(v: any) => console.log(v)}
+          />
         </div>
-      )}
+        <div className="flex justify-end mt-4">
+          <Button
+            className="px-4 py-2 rounded-full download-btn text-foreground"
+            variant={"outline"}
+            onClick={downloadChart}
+          >
+            Download
+            <IconDownload className="w-4 h-4 ml-2" />
+          </Button>
+        </div>
+      </Card>
     </>
   );
 }
