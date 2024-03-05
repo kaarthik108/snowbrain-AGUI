@@ -25,13 +25,17 @@ export function LineChartComponent({
   const filteredData = queryResult.data.map((entry) => {
     const filteredEntry: { [key: string]: string | number } = {};
 
-    if (index && entry.hasOwnProperty(index)) {
-      filteredEntry[index] = entry[index];
+    if (index) {
+      const upperCaseIndex = index.toUpperCase();
+      if (entry.hasOwnProperty(upperCaseIndex)) {
+        filteredEntry[index] = entry[upperCaseIndex];
+      }
     }
 
     categories.forEach((category) => {
-      if (entry.hasOwnProperty(category)) {
-        filteredEntry[category] = entry[category];
+      const upperCaseCategory = category.toUpperCase();
+      if (entry.hasOwnProperty(upperCaseCategory)) {
+        filteredEntry[category] = entry[upperCaseCategory];
       }
     });
 
