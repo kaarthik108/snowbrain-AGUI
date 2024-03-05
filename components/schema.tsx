@@ -17,6 +17,7 @@ function DDLRenderer({ ddl }: { ddl: string }) {
     <div className="py-4 whitespace-pre-line text-sm">
       <Code
         lang="sql"
+        theme={"github-dark"}
         className="text-xs sm:text-sm max-w-[380px] sm:max-w-[480px] overflow-auto"
       >
         {ddl}
@@ -43,7 +44,7 @@ export function Schema() {
         <div className="grid gap-3 py-3 mt-2">
           {DDLData.map((table) => (
             <div key={table.tableName}>
-              <h3 className="text-stone-400">{table.tableName}</h3>
+              <h3 className="">{table.tableName}</h3>
               <DDLRenderer ddl={table.ddl} />
             </div>
           ))}

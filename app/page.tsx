@@ -3,13 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 
 import { UserMessage } from "@/components/llm-charts/message";
-import { useAIState, useActions, useUIState } from "ai/rsc";
+import { useActions, useUIState } from "ai/rsc";
 
 import { ChatList } from "@/components/chat-list";
 import { EmptyScreen } from "@/components/empty-screen";
 import { FooterText } from "@/components/footer";
 import { Button } from "@/components/ui/button";
-import { IconArrowElbow, IconPlus } from "@/components/ui/icons";
+import { IconArrowElbow } from "@/components/ui/icons";
 import { ChatScrollAnchor } from "@/lib/hooks/chat-scroll-anchor";
 import { useEnterSubmit } from "@/lib/hooks/use-enter-submit";
 import Textarea from "react-textarea-autosize";

@@ -14,6 +14,7 @@ const meta = {
   description: "snowBrain - AI Driven snowflake data insights",
 };
 export const metadata: Metadata = {
+  metadataBase: new URL("https://snowbrain.dev"),
   ...meta,
   title: {
     default: "snowBrain - AI",
@@ -26,9 +27,11 @@ export const metadata: Metadata = {
     ...meta,
     card: "summary_large_image",
     site: "@kaarthikcodes",
+    images: "./opengraph-image.png",
   },
   openGraph: {
     ...meta,
+    images: "./opengraph-image.png",
     locale: "en-US",
     type: "website",
   },
