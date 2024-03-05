@@ -1,6 +1,6 @@
 "use client";
 
-import { IconAI, IconUser } from "@/components/ui/icons";
+import { IconSnow, IconUser } from "@/components/ui/icons";
 import { cn } from "@/lib/utils";
 
 // Different types of message bubbles.
@@ -28,7 +28,7 @@ export function BotMessage({
   return (
     <div className={cn("group relative flex items-start md:-ml-12", className)}>
       <div className="flex h-8 w-8 shrink-0 select-none items-center justify-center rounded-md border shadow-sm bg-primary text-primary-foreground">
-        <IconAI />
+        <IconSnow />
       </div>
       <div className="ml-4 flex-1 space-y-2 overflow-hidden px-1">
         {children}
@@ -52,7 +52,7 @@ export function BotCard({
           !showAvatar && "invisible"
         )}
       >
-        <IconAI />
+        <IconSnow />
       </div>
       <div className="ml-4 flex-1 px-1">{children}</div>
     </div>
