@@ -5,7 +5,7 @@ import { IconArrowRight } from "@/components/ui/icons";
 const exampleMessages = [
   {
     heading: "Give me order value over time",
-    message: "Give me order value over time",
+    message: "Give me order value over time using line chart.",
   },
   {
     heading: "What's the total order value?",

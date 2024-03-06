@@ -23,8 +23,10 @@ import { Code } from "bright";
 import { z } from "zod";
 
 import AreaSkeleton from "@/components/llm-charts/AreaSkeleton";
-import { Skeleton } from "@/components/ui/skeleton";
+import { MemoizedReactMarkdown } from "@/components/llm-charts/markdown";
 import { executeQueryWithCache } from "@/lib/snowCache";
+import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
 import { format as sql_format } from "sql-formatter";
 
 if (!process.env.OPENAI_API_KEY) {
@@ -103,7 +105,21 @@ Besides that, you can also chat with users and do some calculations if needed.`,
   });
 
   completion.onTextContent((content: string, isFinal: boolean) => {
-    reply.update(<BotMessage>{content}</BotMessage>);
+    reply.update(
+      <BotMessage>
+        <MemoizedReactMarkdown
+          className="prose break-words dark:prose-invert prose-p:leading-relaxed prose-pre:p-0"
+          remarkPlugins={[remarkGfm, remarkMath]}
+          components={{
+            p({ children }) {
+              return <p className="mb-2 last:mb-0">{children}</p>;
+            },
+          }}
+        >
+          {content}
+        </MemoizedReactMarkdown>
+      </BotMessage>
+    );
     if (isFinal) {
       reply.done();
       aiState.done([...aiState.get(), { role: "assistant", content }]);

@@ -38,14 +38,6 @@ export async function Header() {
             <IconGitHub />
           </a>
         </Button>
-        <Button asChild>
-          <a
-            href="https://vercel.com/new/clone?repository-url=https://github.com/kaarthik108/snowbrain-AGUI"
-            target="_blank"
-          >
-            <IconVercel />
-          </a>
-        </Button>
         <Button asChild variant={"outline"}>
           <a href="https://twitter.com/kaarthikcodes" target="_blank">
             <IconX />
