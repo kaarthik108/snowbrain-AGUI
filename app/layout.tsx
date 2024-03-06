@@ -44,6 +44,8 @@ export const viewport = {
   ],
 };
 
+export const runtime = "edge";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -75,5 +77,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-export const runtime = "edge";

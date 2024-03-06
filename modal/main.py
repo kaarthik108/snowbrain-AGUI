@@ -13,21 +13,15 @@ from fastapi import Depends, FastAPI, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
 from modal import Image, Stub, web_endpoint
-from pydantic import BaseModel
 
 web_app = FastAPI()
 auth_scheme = HTTPBearer()
 
 stub = Stub("snowexecute")
 
-image = Image.debian_slim(python_version="3.10").pip_install(
-    "modal-client",
-    "fastapi",
-    "pydantic==1.10.8",
-    "uvicorn",
+image = Image.debian_slim(python_version="3.11").pip_install(
     "snowflake_snowpark_python",
     "snowflake-snowpark-python[pandas]",
-    "pandas"
 )
 
 stub.sb_image = image
