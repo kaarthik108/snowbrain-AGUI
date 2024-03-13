@@ -14,7 +14,7 @@ SnowBrain is an open-source prototype that serves as your personal data analyst.
 - [shadcn/ui](https://ui.shadcn.com)
 - RAG - Retrieval Augmented Generation [Supabase](https://supabase.com/)
 - Charts using [Tremor](https://tremor.so)
-- Real time data retrieval using [Snowflake](https://www.snowflake.com/)
+- Real time data retrieval using [Snowflake](https://www.snowflake.com/) deployed on [Modal](https://modal.com)
 
 ## Deploy Your Own
 
@@ -31,6 +31,7 @@ You will need to use the environment variables [defined in `.env.example`](.env.
 1. Install Vercel CLI: `npm i -g vercel`
 2. Link local instance with Vercel and GitHub accounts (creates `.vercel` directory): `vercel link`
 3. Download your environment variables: `vercel env pull`
+4. Deploy the modal code on modal/main.py using the following command: `modal deploy`
 
 ```bash
 bun install

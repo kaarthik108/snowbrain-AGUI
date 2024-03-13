@@ -32,7 +32,7 @@ export async function Header() {
         <Button variant="outline" asChild>
           <a
             target="_blank"
-            href="https://github.com/kaarthik108"
+            href="https://github.com/kaarthik108/snowbrain-AGUI"
             rel="noopener noreferrer"
           >
             <IconGitHub />
