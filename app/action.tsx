@@ -12,12 +12,7 @@ import {
 } from "@/components/llm-charts";
 
 import { getContext } from "@/lib/context";
-import {
-  formatNumber,
-  runAsyncFnWithoutBlocking,
-  runOpenAICompletion,
-  sleep,
-} from "@/lib/utils";
+import { runOpenAICompletion } from "@/lib/utils";
 import { FQueryResponse } from "@/lib/validation";
 import { Code } from "bright";
 import { z } from "zod";
@@ -80,9 +75,6 @@ ${getDDL}
 
 \n
 
-The current time is ${new Date().toISOString()}.
-
-
 If the user requests to fetch or query data, call \`query_data\` to query the data from the snowflake database and return the results.
 
 Besides that, you can also chat with users and do some calculations if needed.`,
@@ -138,13 +130,13 @@ Besides that, you can also chat with users and do some calculations if needed.`,
       );
       const { format, title, timeField, categories, index, yaxis, size } =
         input;
-      console.log("Received timeField:", timeField);
-      console.log("Received format:", format);
-      console.log("Received title:", title);
-      console.log("Received categories:", categories);
-      console.log("Received index:", index);
-      console.log("Received yaxis:", yaxis);
-      console.log("Received size:", size);
+      // console.log("Received timeField:", timeField);
+      // console.log("Received format:", format);
+      // console.log("Received title:", title);
+      // console.log("Received categories:", categories);
+      // console.log("Received index:", index);
+      // console.log("Received yaxis:", yaxis);
+      // console.log("Received size:", size);
       let query = input.query;
 
       const format_query = sql_format(query, { language: "sql" });

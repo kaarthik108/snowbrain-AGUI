@@ -69,10 +69,10 @@ export function LineChartComponent({
   const getYValue = (y: number, category: string) => {
     const chartHeight = chartRef.current?.offsetHeight || 0;
     const minValue = Math.min(
-      ...filteredData.map((entry) => entry[category] as number)
+      ...filteredData.map((entry) => entry[category] as number),
     );
     const maxValue = Math.max(
-      ...filteredData.map((entry) => entry[category] as number)
+      ...filteredData.map((entry) => entry[category] as number),
     );
     const value =
       ((chartHeight - y) / chartHeight) * (maxValue - minValue) + minValue;

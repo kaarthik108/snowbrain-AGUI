@@ -22,7 +22,7 @@ export async function getContext(query: string): Promise<string | null> {
   console.log("matchesResponse:", matchesResponse);
   if (matchesResponse.data && Array.isArray(matchesResponse.data)) {
     const highScoreMatches = matchesResponse.data.filter(
-      (match) => match.similarity > 0.7
+      (match) => match.similarity > 0.7,
     );
     const contextMessage =
       highScoreMatches.length > 0

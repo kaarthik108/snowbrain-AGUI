@@ -64,20 +64,20 @@ export function runOpenAICompletion<
             if (hasFunction) return;
             onTextContent(text, true);
           },
-        }
-      )
+        },
+      ),
     );
   })();
 
   return {
     onTextContent: (
-      callback: (text: string, isFinal: boolean) => void | Promise<void>
+      callback: (text: string, isFinal: boolean) => void | Promise<void>,
     ) => {
       onTextContent = callback;
     },
     onFunctionCall: (
       name: FunctionNames,
-      callback: (args: any) => void | Promise<void>
+      callback: (args: any) => void | Promise<void>,
     ) => {
       onFunctionCall[name] = callback;
     },
@@ -95,7 +95,7 @@ export const formatNumber = (value: number) =>
   }).format(value);
 
 export const runAsyncFnWithoutBlocking = (
-  fn: (...args: any) => Promise<any>
+  fn: (...args: any) => Promise<any>,
 ) => {
   fn();
 };

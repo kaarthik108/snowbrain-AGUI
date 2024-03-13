@@ -49,7 +49,7 @@ export function AreaChartComponent({
           filteredEntry[timeField] = value as string;
         } else {
           const matchedCategory = categories.find(
-            (category) => category.toLowerCase() === lowercaseKey
+            (category) => category.toLowerCase() === lowercaseKey,
           );
           if (matchedCategory) {
             filteredEntry[matchedCategory] = value as number;
@@ -57,7 +57,7 @@ export function AreaChartComponent({
         }
       }
       return filteredEntry;
-    }
+    },
   );
 
   const handleMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {

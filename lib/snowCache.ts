@@ -14,7 +14,7 @@ async function getCachedQueryResult(query: string): Promise<any | null> {
   } catch (e) {
     console.error(
       `Error retrieving or parsing cached result for query: ${query}`,
-      JSON.stringify(e, null, 2)
+      JSON.stringify(e, null, 2),
     );
     return null;
   }
@@ -27,7 +27,7 @@ async function setCachedQueryResult(query: string, result: any): Promise<void> {
   } catch (e) {
     console.error(
       `Error caching result for query: ${query}`,
-      JSON.stringify(e, null, 2)
+      JSON.stringify(e, null, 2),
     );
   }
 }
