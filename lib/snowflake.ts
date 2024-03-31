@@ -1,11 +1,14 @@
 export async function executeSnowflakeQuery(sqlText: string) {
-  const modal = process.env.MODAL_URL;
+  const baseUrl =
+    process.env.NODE_ENV === "production"
+      ? "https://www.snowbrain.dev"
+      : "http://localhost:3000";
 
-  const res = await fetch(`${modal}`, {
+  const res = await fetch(`${baseUrl}/api/snow`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.MODAL_AUTH_TOKEN}`,
+      "x-api-key": process.env.X_API_KEY as string,
     },
     body: JSON.stringify({ query: sqlText }),
   });
