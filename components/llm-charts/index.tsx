@@ -18,7 +18,7 @@ const AreaComp = dynamic(
   {
     ssr: false,
     loading: () => <AreaSkeleton />,
-  },
+  }
 );
 
 const NumberComp = dynamic(
@@ -27,7 +27,7 @@ const NumberComp = dynamic(
   {
     ssr: false,
     loading: () => <NumberSkeleton />,
-  },
+  }
 );
 
 const TableComp = dynamic(
@@ -35,7 +35,7 @@ const TableComp = dynamic(
   {
     ssr: false,
     loading: () => <AreaSkeleton />,
-  },
+  }
 );
 
 const LineComp = dynamic(
@@ -43,7 +43,7 @@ const LineComp = dynamic(
   {
     ssr: false,
     loading: () => <AreaSkeleton />,
-  },
+  }
 );
 
 const DonutComp = dynamic(
@@ -51,7 +51,7 @@ const DonutComp = dynamic(
   {
     ssr: false,
     loading: () => <AreaSkeleton />,
-  },
+  }
 );
 
 const ScatterComp = dynamic(
@@ -60,7 +60,7 @@ const ScatterComp = dynamic(
   {
     ssr: false,
     loading: () => <AreaSkeleton />,
-  },
+  }
 );
 
 const BarComp = dynamic(
@@ -68,7 +68,7 @@ const BarComp = dynamic(
   {
     ssr: false,
     loading: () => <AreaSkeleton />,
-  },
+  }
 );
 
 export {
