@@ -55,7 +55,7 @@ async function submitUserMessage(content: string) {
     <BotMessage className="items-center">{spinner}</BotMessage>
   );
   const completion = runOpenAICompletion(openai, {
-    model: "gpt-4-0125-preview",
+    model: "gpt-4o",
     stream: true,
     messages: [
       {

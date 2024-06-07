@@ -1,7 +1,7 @@
 export async function executeSnowflakeQuery(sqlText: string) {
   const baseUrl =
     process.env.NODE_ENV === "production"
-      ? "https://www.snowbrain.dev"
+      ? "https://snowbrain-agui.vercel.app"
       : "http://localhost:3000";
 
   const res = await fetch(`${baseUrl}/api/snow`, {
