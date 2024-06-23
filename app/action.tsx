@@ -55,7 +55,7 @@ async function submitUserMessage(content: string) {
     <BotMessage className="items-center">{spinner}</BotMessage>
   );
   const completion = runOpenAICompletion(openai, {
-    model: "gpt-4o",
+    model: "gpt-4-turbo",
     stream: true,
     messages: [
       {
@@ -142,7 +142,7 @@ Besides that, you can also chat with users and do some calculations if needed.`,
       const format_query = sql_format(query, { language: "sql" });
 
       const res = await executeQueryWithCache(format_query);
-      console.log("Query results:", res);
+      // console.log("Query results:", res);
       // const res = testquery;
       const compatibleQueryResult: QueryResult = {
         columns: res.columns,
